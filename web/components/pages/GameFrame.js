@@ -1,13 +1,13 @@
 // @flow
 
 import React, { Component } from 'react';
+import GamePanel from '../shared/GamePanel/GamePanel';
 import GameContainer from '../GameContainer';
-import GamePanel from '../GamePanel';
 
 import type { Node } from 'react';
 
 type Props = {
-  children: Node
+  children: Node,
 };
 
 export default class GameFrame extends Component<Props> {

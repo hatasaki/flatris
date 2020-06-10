@@ -1,18 +1,18 @@
 // @flow
 
-import React, { Fragment, Component } from 'react';
 import Link from 'next/link';
-import Title from '../../Title';
-import Button from '../../Button';
-import CopyButton from '../../CopyButton';
+import React, { Component, Fragment } from 'react';
 import Screen from '../../screens/shared/Screen';
+import Button from '../../shared/Button';
+import CopyButton from '../../shared/CopyButton';
+import Title from '../../Title';
 import GameFrame from '../GameFrame';
 
 import type { ComponentError } from 'shared/types/error';
 
 type Props = {
   statusCode?: number,
-  error?: ComponentError
+  error?: ComponentError,
 };
 
 export default class Error extends Component<Props> {
@@ -44,7 +44,7 @@ export default class Error extends Component<Props> {
         actions={[
           <Link href="/">
             <Button>Home</Button>
-          </Link>
+          </Link>,
         ]}
       />
     );
@@ -95,7 +95,6 @@ export default class Error extends Component<Props> {
                 position: relative;
                 height: calc(100% / 11 * 2);
                 margin: 1em 0;
-                font-size: 1.1em;
               }
             `}</style>
           </Fragment>
@@ -103,7 +102,7 @@ export default class Error extends Component<Props> {
         actions={[
           <Link href="/">
             <Button>Home</Button>
-          </Link>
+          </Link>,
         ]}
       />
     );

@@ -9,28 +9,46 @@ import {
   activeGames,
   insertUser,
   insertSession,
-  insertGame
+  insertGame,
 } from './db';
 import { rollbar } from './rollbar';
-import { getStats, incrementUserCount, incrementGameCount } from './firebase';
+import {
+  getStats,
+  getDailyStats,
+  incrementUserCount,
+  incrementGameCount,
+} from './firebase';
 
 import type { User } from 'shared/types/state';
 import type { BackfillRequest, BackfillResponse } from 'shared/types/api';
 import type { SessionId } from './db';
 
-export function addRoutes(app: express$Application) {
+export function addRoutes(app: express$Application<>) {
   app.get('/dashboard', async (req: express$Request, res: express$Response) => {
     try {
       res.json({
         // NOTE: This is returned as an array instead of map in order to allow
         // sorting in the future
         games: activeGames.map(gameId => games[gameId]),
-        stats: await getStats()
+        stats: await getStats(),
       });
     } catch (err) {
       res.sendStatus(500);
     }
   });
+
+  app.get(
+    '/daily-stats',
+    async (req: express$Request, res: express$Response) => {
+      try {
+        res.json({
+          days: await getDailyStats(),
+        });
+      } catch (err) {
+        res.sendStatus(500);
+      }
+    }
+  );
 
   app.get('/game/:gameId', (req: express$Request, res: express$Response) => {
     const gameId = req.params.gameId;
@@ -118,7 +136,7 @@ export function addRoutes(app: express$Application) {
     if (gameId && games[gameId]) {
       res.json({
         game: games[gameId],
-        actions: gameActions[gameId]
+        actions: gameActions[gameId],
       });
     } else {
       res.sendStatus(404);
@@ -166,9 +184,9 @@ function extractBackfillRequest(req: mixed): BackfillRequest {
 
       return {
         userId,
-        from
+        from,
       };
-    })
+    }),
   };
 }
 

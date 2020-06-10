@@ -1,7 +1,6 @@
 // @flow
 
 import React from 'react';
-import GameContainer from '../components/GameContainer';
 
 const MAX_COLS = 16;
 const MAX_ROWS = 20;
@@ -10,26 +9,27 @@ type Props = {
   children: React$Node,
   cols?: number,
   rows?: number,
-  backgroundColor?: string
+  backgroundColor?: string,
 };
 
 export function GameContainerMock({
   children,
   cols = MAX_COLS,
   rows = MAX_ROWS,
-  backgroundColor = '#fff'
+  backgroundColor = '#fff',
 }: Props) {
   return (
-    <GameContainer>
-      <div className="inner-container">{children}</div>
+    <div className="container">
+      {children}
       <style jsx>{`
-        .inner-container {
-          position: absolute;
-          width: calc(100% / ${MAX_COLS} * ${cols});
-          height: calc(100% / ${MAX_ROWS} * ${rows});
+        .container {
+          position: relative;
+          width: ${cols * 32}px;
+          height: ${rows * 32}px;
+          font-size: 19px;
           background-color: ${backgroundColor};
         }
       `}</style>
-    </GameContainer>
+    </div>
   );
 }

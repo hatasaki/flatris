@@ -1,13 +1,13 @@
 // @flow
 
-import React, { Fragment, Component } from 'react';
-import Button from '../../Button';
+import React, { Component, Fragment } from 'react';
+import Button from '../../shared/Button';
 import Screen from '../shared/Screen';
 
 type Props = {
   disabled: boolean,
   onWatch: Function,
-  onJoin: Function
+  onJoin: Function,
 };
 
 export default class JoinGame extends Component<Props> {
@@ -42,7 +42,7 @@ export default class JoinGame extends Component<Props> {
             onClick={onWatch}
           >
             Watch
-          </Button>
+          </Button>,
         ]}
       />
     );

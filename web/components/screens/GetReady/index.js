@@ -1,8 +1,8 @@
 // @flow
 
 import React, { Fragment, Component } from 'react';
-import Button from '../../Button';
-import Shake from '../../effects/Shake';
+import Shake from '../../shared/effects/Shake';
+import Button from '../../shared/Button';
 import Screen from '../shared/Screen';
 
 import type { Player } from 'shared/types/state';
@@ -10,7 +10,7 @@ import type { Player } from 'shared/types/state';
 type Props = {
   disabled: boolean,
   otherPlayer: Player,
-  onReady: Function
+  onReady: Function,
 };
 
 export default class GetReady extends Component<Props> {
@@ -37,7 +37,7 @@ export default class GetReady extends Component<Props> {
             <Button disabled={disabled} onClick={onReady}>
               Ready
             </Button>
-          </Shake>
+          </Shake>,
         ]}
       />
     );

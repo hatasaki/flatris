@@ -6,13 +6,20 @@ import { getValidUser } from '../utils/validation';
 import { auth } from '../actions/global';
 
 import type { Store } from 'redux'; // eslint-disable-line import/named
-import type { User, GameId, Game, Stats, State } from 'shared/types/state';
+import type {
+  User,
+  GameId,
+  Game,
+  Stats,
+  DailyStats,
+  State,
+} from 'shared/types/state';
 import type { Action } from 'shared/types/actions';
 import type { BackfillRequest, BackfillResponse } from 'shared/types/api';
 
 // NOTE: This method is strictly called on the server side
 export async function addCurUserToState(
-  req: http$IncomingMessage,
+  req: http$IncomingMessage<>,
   store: Store<State, Action>
 ) {
   const { sessionId } = cookie.parse(req.headers.cookie || '');
@@ -20,8 +27,8 @@ export async function addCurUserToState(
     try {
       const res = await fetchJson('/auth', {
         headers: {
-          cookie: `sessionId=${sessionId}`
-        }
+          cookie: `sessionId=${sessionId}`,
+        },
       });
       const user = getValidUser(res);
       store.dispatch(auth(user));
@@ -37,7 +44,7 @@ export async function createUserSession(userName: string): Promise<User> {
 
 export async function getDashboard(): Promise<{
   games: Array<Game>,
-  stats: Stats
+  stats: Stats,
 }> {
   return fetchJson(`/dashboard`);
 }
@@ -54,6 +61,10 @@ export async function backfillGameActions(
   req: BackfillRequest
 ): Promise<BackfillResponse> {
   return fetchPost(`/backfill`, req);
+}
+
+export async function getDailyStats(): Promise<DailyStats> {
+  return fetchJson(`/daily-stats`);
 }
 
 export function getApiUrl(path?: string) {
@@ -85,9 +96,9 @@ function fetchPost(urlPath: string, body: Object = {}): Promise<any> {
     method: 'POST',
     credentials: 'include',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
 }
 

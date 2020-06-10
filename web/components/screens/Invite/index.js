@@ -1,8 +1,8 @@
 // @flow
 
-import React, { Fragment, Component } from 'react';
-import Button from '../../Button';
-import CopyGameLinkButton from '../../CopyGameLinkButton';
+import React, { Component, Fragment } from 'react';
+import Button from '../../shared/Button';
+import CopyGameLinkButton from '../shared/CopyGameLinkButton';
 import Screen from '../shared/Screen';
 
 import type { GameId } from 'shared/types/state';
@@ -10,7 +10,7 @@ import type { GameId } from 'shared/types/state';
 type Props = {
   disabled: boolean,
   gameId: GameId,
-  onPlay: Function
+  onPlay: Function,
 };
 
 export default class Invite extends Component<Props> {
@@ -44,7 +44,6 @@ export default class Invite extends Component<Props> {
                 position: relative;
                 height: calc(100% / 11 * 2);
                 margin: 1em 0;
-                font-size: 1.1em;
               }
             `}</style>
           </Fragment>
@@ -52,7 +51,7 @@ export default class Invite extends Component<Props> {
         actions={[
           <Button disabled={disabled} onClick={onPlay}>
             Play
-          </Button>
+          </Button>,
         ]}
       />
     );

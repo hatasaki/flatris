@@ -1,22 +1,22 @@
 // @flow
 
-import React, { Fragment, Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { auth } from '../../../actions/global';
 import { MAX_NAME_LENGTH } from 'shared/constants/user';
+import { auth } from '../../../actions/global';
 import { createUserSession } from '../../../utils/api';
-import Button from '../../Button';
+import Button from '../../shared/Button';
 import FlatrisIntro from '../onboarding/FlatrisIntro';
+import HowToPlay from '../onboarding/HowToPlay';
 import Multiplayer from '../onboarding/Multiplayer';
 import ZeroSum from '../onboarding/ZeroSum';
-import HowToPlay from '../onboarding/HowToPlay';
 import Screen from '../shared/Screen';
 
-import type { User, State } from 'shared/types/state';
+import type { State, User } from 'shared/types/state';
 
 type Props = {
   jsReady: boolean,
-  auth: typeof auth
+  auth: typeof auth,
 };
 
 type OnboardingStep = 'intro' | '1vs1' | '0sum' | 'howto';
@@ -26,14 +26,14 @@ type LocalState = {
   pendingAuth: boolean,
   user: ?User,
   onboardingStep: OnboardingStep,
-  hasSubmitted: boolean
+  hasSubmitted: boolean,
 };
 
 const ONBOARDING_SCREENS = {
   intro: FlatrisIntro,
   '1vs1': Multiplayer,
   '0sum': ZeroSum,
-  howto: HowToPlay
+  howto: HowToPlay,
 };
 
 const ONBOARDING_STEPS = Object.keys(ONBOARDING_SCREENS);
@@ -46,7 +46,7 @@ class Auth extends Component<Props, LocalState> {
     pendingAuth: false,
     user: null,
     onboardingStep: 'intro',
-    hasSubmitted: false
+    hasSubmitted: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -68,7 +68,7 @@ class Auth extends Component<Props, LocalState> {
 
   handleNameChange = e => {
     this.setState({
-      name: e.target.value
+      name: e.target.value,
     });
   };
 
@@ -78,7 +78,7 @@ class Auth extends Component<Props, LocalState> {
     const { name } = this.state;
     if (name) {
       this.setState({
-        pendingAuth: true
+        pendingAuth: true,
       });
 
       const user = await createUserSession(name);
@@ -87,7 +87,7 @@ class Auth extends Component<Props, LocalState> {
       // user seems the onboarding screen
       this.setState({
         pendingAuth: false,
-        user
+        user,
       });
     }
   };
@@ -105,11 +105,11 @@ class Auth extends Component<Props, LocalState> {
 
     if (nextStep) {
       this.setState({
-        onboardingStep: nextStep
+        onboardingStep: nextStep,
       });
     } else {
       this.setState({
-        hasSubmitted: true
+        hasSubmitted: true,
       });
 
       auth(user);
@@ -123,7 +123,7 @@ class Auth extends Component<Props, LocalState> {
       pendingAuth,
       user,
       onboardingStep,
-      hasSubmitted
+      hasSubmitted,
     } = this.state;
 
     // Greet user with onboarding after they authenticate
@@ -164,7 +164,7 @@ class Auth extends Component<Props, LocalState> {
           actions={[
             <Button type="submit" disabled={!jsReady || !name || pendingAuth}>
               Enter
-            </Button>
+            </Button>,
           ]}
         />
         <style jsx>{`
@@ -203,10 +203,7 @@ function mapStateToProps({ jsReady }: State): $Shape<Props> {
 }
 
 const mapDispatchToProps = {
-  auth
+  auth,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

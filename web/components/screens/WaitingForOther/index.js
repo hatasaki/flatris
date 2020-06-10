@@ -2,9 +2,9 @@
 
 import React, { Fragment, Component } from 'react';
 import Link from 'next/link';
-import Shake from '../../effects/Shake';
-import FadeIn from '../../effects/FadeIn';
-import Button from '../../Button';
+import Shake from '../../shared/effects/Shake';
+import FadeIn from '../../shared/effects/FadeIn';
+import Button from '../../shared/Button';
 import Screen from '../shared/Screen';
 
 import type { Player } from 'shared/types/state';
@@ -12,24 +12,24 @@ import type { Player } from 'shared/types/state';
 type Props = {
   disabled: boolean,
   curPlayer: Player,
-  onPing: Function
+  onPing: Function,
 };
 
 type LocalState = {
-  isOtherPlayerIdle: boolean
+  isOtherPlayerIdle: boolean,
 };
 
 export default class WaitingForOther extends Component<Props, LocalState> {
   timeoutId: ?TimeoutID;
 
   state = {
-    isOtherPlayerIdle: false
+    isOtherPlayerIdle: false,
   };
 
   componentDidMount() {
     this.timeoutId = setTimeout(() => {
       this.setState({
-        isOtherPlayerIdle: true
+        isOtherPlayerIdle: true,
       });
     }, 30000);
   }
@@ -77,7 +77,7 @@ export default class WaitingForOther extends Component<Props, LocalState> {
             <Button disabled={disabled} onClick={onPing}>
               Ping
             </Button>
-          </Shake>
+          </Shake>,
         ]}
       />
     );

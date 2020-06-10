@@ -1,12 +1,12 @@
 // @flow
 
-import React, { Fragment, Component } from 'react';
+import React, { Component, Fragment } from 'react';
+import Button from '../../../shared/Button';
 import Screen from '../../shared/Screen';
-import Button from '../../../Button';
 
 type Props = {
   disabled: boolean,
-  onNext: Function
+  onNext: Function,
 };
 
 export default class HowToPlay extends Component<Props> {
@@ -42,7 +42,7 @@ export default class HowToPlay extends Component<Props> {
         actions={[
           <Button disabled={disabled} onClick={onNext}>
             Got it
-          </Button>
+          </Button>,
         ]}
       />
     );
