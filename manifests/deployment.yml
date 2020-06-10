@@ -1,0 +1,16 @@
+apiVersion : apps/v1beta1
+kind: Deployment
+metadata:
+  name: hatasakiflatris 
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hatasakiflatris 
+    spec:
+      containers:
+        - name: hatasakiflatris 
+          image: akscrg.azurecr.io/hatasakiflatris
+          ports:
+          - containerPort: 3000
